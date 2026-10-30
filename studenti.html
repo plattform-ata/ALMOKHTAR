@@ -1980,13 +1980,13 @@
       overflow: hidden;
     }
 
-    /* ticket notches: two half-circles cut into the card edges, sitting
-       right where the dashed tear line crosses */
-    .qr-pass::before,
-    .qr-pass::after {
+    /* ticket notches: two half-circles cut into the card edges, anchored to
+       the dashed tear line so they always line up with it */
+    .qr-pass-tear::before,
+    .qr-pass-tear::after {
       content: "";
       position: absolute;
-      top: 78px;
+      top: -13px;
       width: 22px;
       height: 22px;
       border-radius: 50%;
@@ -1994,8 +1994,8 @@
       border: 1px solid var(--line);
     }
 
-    .qr-pass::before { inset-inline-start: -12px; }
-    .qr-pass::after { inset-inline-end: -12px; }
+    .qr-pass-tear::before { inset-inline-start: -29px; }
+    .qr-pass-tear::after { inset-inline-end: -29px; }
 
     .qr-pass-title {
       font-size: 16px;
@@ -2010,6 +2010,7 @@
     }
 
     .qr-pass-tear {
+      position: relative;
       width: 100%;
       margin: 14px 0 16px;
       border-top: 2px dashed var(--line);
@@ -2024,7 +2025,7 @@
       border: 0;
       border-radius: var(--radius-md);
       background: #fff;
-      box-shadow: var(--shadow-1), 0 0 0 3px var(--accent-soft);
+      outline: 3px solid var(--accent-soft);
       cursor: zoom-in;
     }
 
