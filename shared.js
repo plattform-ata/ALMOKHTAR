@@ -1180,16 +1180,28 @@ window.normalizeWhatsAppNumber = function (phone) {
   return digits;
 };
 
+// UltraMsg settings live in Firebase (settings.ultramsgApiUrl / ultramsgInstanceId /
+// ultramsgToken) and are edited from the admin settings modal. Empty fields fall
+// back to the constants above, so nothing breaks if they were never filled in.
+window.getUltraMsgConfig = function () {
+  var st = (window.getSettings && window.getSettings()) || {};
+  var instance = (st.ultramsgInstanceId || '').trim() || window.ULTRAMSG_INSTANCE;
+  var apiUrl = (st.ultramsgApiUrl || '').trim().replace(/\/+$/, '');
+  if (!apiUrl) apiUrl = 'https://api.ultramsg.com/' + instance;
+  return { apiUrl: apiUrl, token: (st.ultramsgToken || '').trim() || window.ULTRAMSG_TOKEN };
+};
+
 var _waChain = Promise.resolve();
 window.sendWhatsAppAuto = function (phone, text) {
   var to = window.normalizeWhatsAppNumber(phone);
   if (!to) return Promise.resolve(false);
   var job = _waChain.then(function () {
+    var cfg = window.getUltraMsgConfig();
     var body = new URLSearchParams();
-    body.append('token', window.ULTRAMSG_TOKEN);
+    body.append('token', cfg.token);
     body.append('to', to);
     body.append('body', text);
-    return fetch('https://api.ultramsg.com/' + window.ULTRAMSG_INSTANCE + '/messages/chat', {
+    return fetch(cfg.apiUrl + '/messages/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body.toString()
