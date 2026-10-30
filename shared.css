@@ -1021,3 +1021,213 @@ html[dir="rtl"] .flip-rtl {
         padding-bottom: calc(172px + env(safe-area-inset-bottom));
     }
 }
+
+/* =========================================================
+   Visual refinement layer
+   Added at the very end so it only refines what's above — nothing
+   earlier in this file was changed or removed. To go back to the
+   previous look, delete everything from this comment to the end.
+   Rules: keep the flat style (no shadows/gradients), and never
+   touch the accent color (the admin and each student pick it).
+   ========================================================= */
+
+/* ---- calmer, neutral palette (easier on the eyes than the old
+        lavender tint, and it follows whatever accent is chosen) ---- */
+:root {
+    --bg: #111318;
+    --bg-elev: #171A20;
+    --card: #1B1E26;
+    --card-2: #232731;
+    --line: #2E323E;
+    --text: #EBEDF2;
+    --text-dim: #A4AABA;
+    --text-faint: #7E8597;
+}
+
+:root[data-theme="light"] {
+    --bg: #F5F6F9;
+    --bg-elev: #FFFFFF;
+    --card: #FFFFFF;
+    --card-2: #F2F4F8;
+    --line: #E1E4EB;
+    --text: #1E2230;
+    --text-dim: #565D70;
+    --text-faint: #767D91;
+}
+
+@supports (background: color-mix(in srgb, red 10%, white)) {
+    :root[data-theme="light"] {
+        --bg: color-mix(in srgb, var(--accent) 3%, #F6F7F9);
+        --card-2: color-mix(in srgb, var(--accent) 4%, #F3F4F8);
+    }
+
+    :root:not([data-theme="light"]) {
+        --card-2: color-mix(in srgb, var(--accent) 5%, #222630);
+    }
+}
+
+/* ---- typography ---- */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 15px;
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+    font-variant-numeric: tabular-nums;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    line-height: 1.4;
+    text-wrap: balance;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+/* ---- a quieter background: the floating math symbols stay (they are
+        part of the platform's identity) but drift slowly and faintly ---- */
+.page-math-background .math-symbol {
+    opacity: .07;
+    animation-duration: 22s;
+}
+
+:root[data-theme="light"] .page-math-background .math-symbol {
+    opacity: .1;
+}
+
+/* ---- controls: comfortable tap size, clear states ---- */
+.btn {
+    min-height: 48px;
+    border-radius: 14px;
+    letter-spacing: 0;
+}
+
+.btn-sm {
+    min-height: 38px;
+}
+
+.btn:focus-visible,
+.chip:focus-visible,
+.tab:focus-visible,
+.icon-btn:focus-visible {
+    outline: 3px solid var(--accent-2);
+    outline-offset: 2px;
+}
+
+.btn-ghost {
+    background: var(--card);
+}
+
+.btn-ghost:active {
+    background: var(--card-2);
+}
+
+.input,
+select.input,
+textarea.input {
+    min-height: 48px;
+    border-radius: 14px;
+    line-height: 1.5;
+}
+
+.input:hover:not(:focus) {
+    border-color: var(--text-faint);
+}
+
+textarea.input {
+    min-height: 96px;
+    line-height: 1.7;
+}
+
+/* larger invisible hit area; the visible size stays the same */
+.icon-btn,
+.modal-close {
+    position: relative;
+}
+
+.icon-btn::after,
+.modal-close::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+}
+
+.chip {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.chip:hover:not(.active) {
+    border-color: var(--text-faint);
+    color: var(--text);
+}
+
+.field label {
+    font-size: 13px;
+}
+
+/* ---- surfaces ---- */
+.card {
+    border-color: var(--line);
+}
+
+.avatar {
+    background: var(--card-2);
+}
+
+.divider {
+    background: var(--line);
+}
+
+:root[data-theme="light"] .overlay {
+    background: rgba(24, 27, 38, .45);
+}
+
+.toast {
+    border-radius: 14px;
+    padding: 12px 18px;
+}
+
+/* ---- text colors that were too light to read in light mode ---- */
+:root[data-theme="light"] .badge-ok {
+    color: #166534;
+}
+
+:root[data-theme="light"] .badge-bad {
+    color: #B4233A;
+}
+
+:root[data-theme="light"] .err-text {
+    color: #C0213A;
+}
+
+/* ---- thin, unobtrusive scrollbars ---- */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
