@@ -1,0 +1,54 @@
+{
+  "name": "سنتر الرياضيات - المختار",
+  "short_name": "المختار",
+  "description": "منصة سنتر الرياضيات لمتابعة الحضور والدرجات والواجبات",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0F1117",
+  "theme_color": "#0F1117",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "./index.html",
+  "orientation": "any",
+  "categories": [
+    "education"
+  ],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "صفحة الطالب",
+      "short_name": "الطالب",
+      "url": "./studenti.html"
+    },
+    {
+      "name": "لوحة الأدمن",
+      "short_name": "الأدمن",
+      "url": "./admin.html"
+    }
+  ]
+}
